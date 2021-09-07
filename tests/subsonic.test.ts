@@ -3,14 +3,14 @@ import { v4 as uuid } from "uuid";
 
 import {
   isDodgyImage,
-  Navidrome,
+  Subsonic,
   t,
   BROWSER_HEADERS,
   DODGY_IMAGE_NAME,
   asGenre,
   appendMimeTypeToClientFor,
   asURLSearchParams,
-} from "../src/navidrome";
+} from "../src/subsonic";
 import encryption from "../src/encryption";
 
 import axios from "axios";
@@ -430,14 +430,15 @@ const EMPTY = `<subsonic-response xmlns="http://subsonic.org/restapi" status="ok
 
 const PING_OK = `<subsonic-response xmlns="http://subsonic.org/restapi" status="ok" version="1.16.1" type="navidrome" serverVersion="0.40.0 (8799358a)"></subsonic-response>`;
 
-describe("Navidrome", () => {
+describe("Subsonic", () => {
   const url = "http://127.0.0.22:4567";
   const username = "user1";
   const password = "pass1";
   const salt = "saltysalty";
 
   const streamClientApplication = jest.fn();
-  const navidrome = new Navidrome(
+  const navidrome = new Subsonic(
+    "SubsonicUnderTest",
     url,
     encryption("secret"),
     streamClientApplication
@@ -500,7 +501,7 @@ describe("Navidrome", () => {
 
         const token = await navidrome.generateToken({ username, password });
         expect(token).toEqual({
-          message: "Navidrome error:Wrong username or password",
+          message: "SubsonicUnderTest error:Wrong username or password",
         });
       });
     });
@@ -2483,7 +2484,7 @@ describe("Navidrome", () => {
 
             return expect(
               musicLibrary.stream({ trackId, range: undefined })
-            ).rejects.toEqual(`Navidrome failed with a 400 status`);
+            ).rejects.toEqual(`SubsonicUnderTest failed with a 400 status`);
           });
         });
       });
@@ -3896,7 +3897,7 @@ describe("Navidrome", () => {
               .then((it) => it as AuthSuccess)
               .then((it) => navidrome.login(it.authToken))
               .then((it) => it.playlist(id))
-          ).rejects.toEqual("Navidrome error:data not found");
+          ).rejects.toEqual("SubsonicUnderTest error:data not found");
         });
       });
 
@@ -4263,7 +4264,7 @@ describe("Navidrome", () => {
             .then((it) => it as AuthSuccess)
             .then((it) => navidrome.login(it.authToken))
             .then((it) => it.similarSongs(id))
-        ).rejects.toEqual("Navidrome error:data not found");
+        ).rejects.toEqual("SubsonicUnderTest error:data not found");
       });
     });
   });

@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 import server from "./server";
 import logger from "./logger";
-import { appendMimeTypeToClientFor, DEFAULT, Navidrome } from "./navidrome";
+import { appendMimeTypeToClientFor, DEFAULT, Subsonic } from "./subsonic";
 import encryption from "./encryption";
 import { InMemoryAccessTokens, sha256 } from "./access_tokens";
 import { InMemoryLinkCodes } from "./link_codes";
@@ -28,7 +28,8 @@ const streamUserAgent = config.navidrome.customClientsFor
   ? appendMimeTypeToClientFor(config.navidrome.customClientsFor.split(","))
   : DEFAULT;
 
-const navidrome = new Navidrome(
+const navidrome = new Subsonic(
+  "Navidrome",
   config.navidrome.url,
   encryption(config.secret),
   streamUserAgent

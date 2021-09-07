@@ -298,16 +298,19 @@ export const asURLSearchParams = (q: any) => {
   return urlSearchParams;
 };
 
-export class Navidrome implements MusicService {
+export class Subsonic implements MusicService {
+  implementationName: string;
   url: string;
   encryption: Encryption;
   streamClientApplication: StreamClientApplication;
 
   constructor(
+    implementationName: string,
     url: string,
     encryption: Encryption,
     streamClientApplication: StreamClientApplication = DEFAULT
   ) {
+    this.implementationName = implementationName;
     this.url = url;
     this.encryption = encryption;
     this.streamClientApplication = streamClientApplication;
@@ -335,7 +338,7 @@ export class Navidrome implements MusicService {
       })
       .then((response) => {
         if (response.status != 200 && response.status != 206) {
-          throw `Navidrome failed with a ${response.status || "no!"} status`;
+          throw `${this.implementationName} failed with a ${response.status || "no!"} status`;
         } else return response;
       });
 
@@ -368,7 +371,7 @@ export class Navidrome implements MusicService {
       )
       .then((json) => json["subsonic-response"])
       .then((json) => {
-        if (isError(json)) throw `Navidrome error:${json.error._message}`;
+        if (isError(json)) throw `${this.implementationName} error:${json.error._message}`;
         else return json as unknown as T;
       });
 
