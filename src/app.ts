@@ -10,6 +10,7 @@ import readConfig from "./config";
 import sonos, { bonobService } from "./sonos";
 import { MusicService } from "./music_service";
 import { SystemClock } from "./clock";
+import { Navidrome } from "./navidrome";
 
 const config = readConfig();
 
@@ -28,8 +29,7 @@ const streamUserAgent = config.navidrome.customClientsFor
   ? appendMimeTypeToClientFor(config.navidrome.customClientsFor.split(","))
   : DEFAULT;
 
-const navidrome = new Subsonic(
-  "Navidrome",
+const navidrome = new Navidrome(
   config.navidrome.url,
   encryption(config.secret),
   streamUserAgent
