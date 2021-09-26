@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 import server from "./server";
 import logger from "./logger";
-import { appendMimeTypeToClientFor, DEFAULT, Subsonic } from "./subsonic";
+import { appendMimeTypeToClientFor, DEFAULT } from "./subsonic";
 import encryption from "./encryption";
 import { InMemoryAccessTokens, sha256 } from "./access_tokens";
 import { InMemoryLinkCodes } from "./link_codes";
